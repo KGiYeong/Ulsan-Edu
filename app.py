@@ -61,7 +61,7 @@ if prompt := st.chat_input("test.pdf 내용에 대해 물어보세요!"):
                 
                 # 안정적인 모델명 사용
                 llm = ChatGoogleGenerativeAI(
-                    model="gemini-1.5-flash",
+                    model="gemini-2.5-flash",
                     temperature=0
                 )
                 
