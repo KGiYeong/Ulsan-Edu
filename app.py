@@ -77,7 +77,7 @@ if prompt := st.chat_input("test.pdf 내용에 대해 물어보세요!"):
     with st.chat_message("assistant"):
         try:
             with st.spinner("답변을 찾는 중..."):
-                docs = retriever.get_relevant_documents(prompt)
+                docs = retriever.invoke(prompt)
                 context = "\n\n".join([doc.page_content for doc in docs])
                 
                 llm = ChatGoogleGenerativeAI(
