@@ -90,18 +90,3 @@ if prompt := st.chat_input("test.pdf 내용에 대해 물어보세요!"):
     
     st.session_state.messages.append({"role": "assistant", "content": response})
 ```
-
-**주요 변경사항:**
-
-1. **RetrievalQA 대신 create_retrieval_chain 사용**: 최신 LangChain 방식
-2. **프롬프트 템플릿 추가**: 명확한 지시사항 전달
-3. **모델명 수정**: `gemini-2.5-flash` → `gemini-2.0-flash-exp` (실제 사용 가능한 모델명)
-
-**requirements.txt에 다음 패키지들이 포함되어 있는지 확인하세요:**
-```
-streamlit
-langchain
-langchain-google-genai
-langchain-community
-faiss-cpu
-pypdf
