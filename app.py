@@ -4,8 +4,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmb
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 
 # 1. 페이지 설정
 st.set_page_config(page_title="PDF 테스트 챗봇", page_icon="🤖")
@@ -67,23 +65,18 @@ if prompt := st.chat_input("test.pdf 내용에 대해 물어보세요!"):
                 # LLM으로 답변 생성
                 llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp", temperature=0)
                 
-                template = """다음 문서의 내용을 바탕으로 질문에 답변해주세요. 
+                # 직접 프롬프트 작성
+                full_prompt = f"""다음 문서의 내용을 바탕으로 질문에 답변해주세요. 
 문서에 관련 내용이 없다면 '죄송합니다. 학교 공지에 없는 내용입니다.'라고 답변해주세요.
 
 문서 내용:
 {context}
 
-질문: {question}
+질문: {prompt}
 
 답변:"""
                 
-                prompt_template = PromptTemplate(
-                    input_variables=["context", "question"],
-                    template=template
-                )
-                
-                chain = LLMChain(llm=llm, prompt=prompt_template)
-                response = chain.run(context=context, question=prompt)
+                response = llm.invoke(full_prompt).content
                 
                 st.markdown(response)
     
